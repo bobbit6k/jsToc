@@ -25,7 +25,7 @@ To use this class, you'll need to include the JavaScript file in your HTML docum
     <script>
       document.addEventListener("DOMContentLoaded", function() {
         // Instantiate the class with the container ID and starting heading level
-        const toc = new TableOfContents('#articolo', 'h2');
+        const toc = new TableOfContents('#article', 'h2');
         // Generate the table of contents
         toc.generate();
       });
