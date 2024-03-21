@@ -2,6 +2,10 @@
 
 The `TableOfContents` JavaScript class dynamically generates a table of contents (ToC) for a specified container element on your webpage. It extracts headings (`<h1>` through `<h6>`, with a specified starting level) that have unique `id` attributes and creates a clickable ToC, allowing users to navigate to different sections of the content easily.
 
+## Why a TOC (Table of Contents) matters?
+
+A table of contents (ToC) in digital content enhances user navigation and accessibility, improves content organization, and can positively affect search engine visibility. Utilizing appropriate headings for ToC creation not only lends a professional appearance to documents but also facilitates easier content access, making it a recommended practice for improving reader engagement and website usability.
+
 ## Features
 
 - Dynamically scans specified container for headings (`h1`-`h6`).
