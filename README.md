@@ -46,6 +46,7 @@ Given an HTML structure like this:
     <h2 id="section2">Section 2</h2>
     <p>Content under section 2</p>
 </section>
+```
 
 After executing the generate method, the <div id="toc"> element will be filled with the following structure, providing a nested, clickable table of contents:
 
@@ -58,4 +59,4 @@ After executing the generate method, the <div id="toc"> element will be filled w
     </li>
     <li><a href="#section2">Section 2</a></li>
 </ul>
-
+```
