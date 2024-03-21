@@ -16,7 +16,7 @@ To use this class, you'll need to include the JavaScript file in your HTML docum
 1. **Include the JavaScript Class**: Add the `TableOfContents.js` script to your HTML document.
 
     ```html
-    <script src="path/to/TableOfContents.js"></script>
+    <script src="path/to/toc.js"></script>
     ```
 
 2. **Instantiate and Generate the ToC**: In your HTML document, call the `generate` method of the `TableOfContents` class after the document is fully loaded. Use the `DOMContentLoaded` event listener to ensure the timing.
