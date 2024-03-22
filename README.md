@@ -13,7 +13,7 @@ The `TableOfContents` JavaScript class dynamically generates a table of contents
 
 To use this class, you'll need to include the JavaScript file in your HTML document and then instantiate the class with the appropriate parameters. Here's a step-by-step guide:
 
-1. **Include the JavaScript Class**: Add the `TableOfContents.js` script to your HTML document.
+1. **Include the JavaScript Class**: Add the `toc.js` script to your HTML document.
 
     ```html
     <script src="path/to/toc.js"></script>
