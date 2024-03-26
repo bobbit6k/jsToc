@@ -1,4 +1,4 @@
-# Table of Contents Generator
+# Js Table of Contents Generator
 
 The `TableOfContents` JavaScript class dynamically generates a table of contents (ToC) for a specified container element on your webpage. It extracts headings (`<h1>` through `<h6>`, with a specified starting level) that have unique `id` attributes and creates a clickable ToC, allowing users to navigate to different sections of the content easily.
 
