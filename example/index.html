@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOC Example</title>
+    <style>
+        h1, h2, h3, h4, h5, h6 {
+            margin-bottom: 80px;
+        }
+    </style>
+</head>
+<body>
+    <div id="toc"></div>
+    <div id="content">
+        <h1>Introduction to JavaScript</h1>
+        <p>JavaScript is a powerful programming language...</p>
+        
+        <h2>Basic Syntax</h2>
+        <p>Let's look at some basic JavaScript syntax...</p>
+        
+        <h3>Variables</h3>
+        <p>Variables are declared using let, const, or var...</p>
+        
+        <h3>Functions</h3>
+        <p>Functions are reusable blocks of code...</p>
+        
+        <h2>DOM Manipulation</h2>
+        <p>JavaScript can interact with the Document Object Model...</p>
+        
+        <h3>Selecting Elements</h3>
+        <p>You can select elements using methods like...</p>
+        
+        <h3>Event Handling</h3>
+        <p>JavaScript can respond to user interactions...</p>
+    </div>
+
+    <script src="../toc.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toc = new TableOfContents('#content', 'h1');
+            toc.generate();
+        });
+    </script>
+</body>
+</html>

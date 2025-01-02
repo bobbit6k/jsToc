@@ -5,6 +5,28 @@ class TableOfContents {
       this.validHeadings = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6'];
       this.encounteredIds = new Set(); // To ensure uniqueness of IDs
     }
+
+    _generateId(text) {
+      // Convert to lowercase, replace spaces with hyphens, remove special chars
+      let slug = text.toLowerCase()
+        .replace(/[^\w\s-]/g, '') // Remove special chars
+        .replace(/\s+/g, '-')     // Replace spaces with -
+        .replace(/-+/g, '-');     // Replace multiple - with single -
+      
+      // If slug is empty, use 'section'
+      if (!slug) slug = 'section';
+      
+      // Ensure uniqueness
+      let uniqueSlug = slug;
+      let counter = 1;
+      while (this.encounteredIds.has(uniqueSlug)) {
+        uniqueSlug = `${slug}-${counter}`;
+        counter++;
+      }
+      
+      this.encounteredIds.add(uniqueSlug);
+      return uniqueSlug;
+    }
   
     generate() {
       const contentArea = document.querySelector(this.containerId);
@@ -14,12 +36,15 @@ class TableOfContents {
       const startingIndex = this.validHeadings.indexOf(this.startingHeading.toUpperCase());
       if (startingIndex === -1) return;
   
-      // Filter headings that have an ID
+      // Get all headings and generate IDs for those that don't have them
       const headings = Array.from(contentArea.querySelectorAll(this.validHeadings.slice(startingIndex).join(', ')))
-                            .filter(heading => heading.id && !this.encounteredIds.has(heading.id));
-  
-      // Update encounteredIds with found IDs to ensure uniqueness
-      headings.forEach(heading => this.encounteredIds.add(heading.id));
+                            .map(heading => {
+                              if (!heading.id || this.encounteredIds.has(heading.id)) {
+                                heading.id = this._generateId(heading.textContent);
+                              }
+                              this.encounteredIds.add(heading.id);
+                              return heading;
+                            });
   
       if (headings.length === 0) return;
   
@@ -60,4 +85,3 @@ class TableOfContents {
       });
     }
   }
-  

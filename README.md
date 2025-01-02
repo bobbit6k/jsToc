@@ -4,6 +4,8 @@ The `TableOfContents` JavaScript class dynamically generates a table of contents
 
 ## Features
 
+- Automatic heading spacing: Adds 200px margin-bottom to all heading elements (h1-h6) for better visual separation
+
 - Dynamically scans specified container for headings (`h1`-`h6`).
 - Filters headings to include only those with unique `id` attributes.
 - Generates a nested list representing the headings hierarchy.
