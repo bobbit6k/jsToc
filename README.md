@@ -41,11 +41,11 @@ Given an HTML structure like this:
 ```html
 <div id="toc"></div>
 <section id="article">
-    <h2 id="section1">Section 1</h2>
+    <h2>Section 1</h2>
     <p>Content under section 1</p>
-    <h3 id="subsection1">Subsection 1.1</h3>
+    <h3>Subsection 1.1</h3>
     <p>Content under subsection 1.1</p>
-    <h2 id="section2">Section 2</h2>
+    <h2>Section 2</h2>
     <p>Content under section 2</p>
 </section>
 ```
