@@ -54,10 +54,10 @@ After executing the generate method, the ```html <div id="toc">``` element will 
 
 ```html
 <ul>
-    <li><a href="#section1">Section 1</a>
+    <li><a href="#section-1">Section 1</a>
         <ul>
-            <li><a href="#subsection1">Subsection 1.1</a></li>
+            <li><a href="#subsection-1-1">Subsection 1.1</a></li>
         </ul>
     </li>
-    <li><a href="#section2">Section 2</a></li>
+    <li><a href="#section-2">Section 2</a></li>
 </ul>
