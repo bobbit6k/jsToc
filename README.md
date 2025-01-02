@@ -21,6 +21,14 @@ To use this class, you'll need to include the JavaScript file in your HTML docum
     <script src="path/to/toc.js"></script>
     ```
 
+    or you can grab it from jsdelivr.net cdn
+
+    ```html
+    <script src="https://cdn.jsdelivr.net/gh/bobbit6k/jsToc@latest/toc-min.js"></script>
+    ```
+
+    
+
 2. **Instantiate and Generate the ToC**: In your HTML document, call the `generate` method of the `TableOfContents` class after the document is fully loaded. Use the `DOMContentLoaded` event listener to ensure the timing.
 
     ```html
