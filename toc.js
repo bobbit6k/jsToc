@@ -1,7 +1,8 @@
 class TableOfContents {
-    constructor(containerId, startingHeading) {
+    constructor(containerId, startingHeading, maxHeading = 'H6') {
       this.containerId = containerId;
       this.startingHeading = startingHeading;
+      this.maxHeading = maxHeading;
       this.validHeadings = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6'];
       this.encounteredIds = new Set(); // To ensure uniqueness of IDs
     }
@@ -37,7 +38,12 @@ class TableOfContents {
       if (startingIndex === -1) return;
   
       // Get all headings and generate IDs for those that don't have them
-      const headings = Array.from(contentArea.querySelectorAll(this.validHeadings.slice(startingIndex).join(', ')))
+      // Get the range of headings between starting and max levels
+      const startIndex = this.validHeadings.indexOf(this.startingHeading.toUpperCase());
+      const maxIndex = this.validHeadings.indexOf(this.maxHeading.toUpperCase());
+      const validRange = this.validHeadings.slice(startIndex, maxIndex + 1);
+      
+      const headings = Array.from(contentArea.querySelectorAll(validRange.join(', ')))
                             .map(heading => {
                               if (!heading.id || this.encounteredIds.has(heading.id)) {
                                 heading.id = this._generateId(heading.textContent);

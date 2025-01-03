@@ -34,13 +34,18 @@ To use this class, you'll need to include the JavaScript file in your HTML docum
     ```html
     <script>
       document.addEventListener("DOMContentLoaded", function() {
-        // Instantiate the class with the container ID and starting heading level
-        const toc = new TableOfContents('#article', 'h2');
+        // Instantiate the class with container ID, starting heading level, and max heading level
+        const toc = new TableOfContents('#article', 'h2', 'h3'); // Will include h2 and h3, exclude h4-h6
         // Generate the table of contents
         toc.generate();
       });
     </script>
     ```
+
+    The constructor takes three parameters:
+    - `containerId`: The ID of the container element to scan for headings
+    - `startingHeading`: The minimum heading level to include (e.g., 'h2')
+    - `maxHeading`: (optional) The maximum heading level to include (default: 'h6')
 
 ## Example
 
