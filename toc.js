@@ -1,12 +1,12 @@
 class TableOfContents {
-  constructor(containerId, startingHeading = 'H1', maxHeading = 'H6') {
+  constructor(containerId, startingHeading = 'H1', maxHeading = 'H6', preserveIds = true) {
     this.containerId = containerId;
     this.startingHeading = startingHeading.toUpperCase();
     this.maxHeading = maxHeading.toUpperCase();
     this.validHeadings = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6'];
     this.encounteredIds = new Set();
+    this.preserveIds = preserveIds;
     
-    // Validate inputs
     if (!this.validHeadings.includes(this.startingHeading)) {
       throw new Error(`Invalid starting heading: ${startingHeading}`);
     }
@@ -19,22 +19,25 @@ class TableOfContents {
     }
   }
 
-  _generateId(text) {
+  _generateId(text, existingId = null) {
+    if (this.preserveIds && existingId && !this.encounteredIds.has(existingId)) {
+      this.encounteredIds.add(existingId);
+      return existingId;
+    }
+
     let slug = text.toLowerCase()
       .trim()
-      .normalize('NFD')                 // Normalize unicode characters
-      .replace(/[\u0300-\u036f]/g, '') // Remove diacritics
-      .replace(/[^\w\s-]/g, '')        // Remove special chars
-      .replace(/\s+/g, '-')            // Replace spaces with -
-      .replace(/-+/g, '-')             // Replace multiple - with single -
-      .replace(/^-+|-+$/g, '');        // Remove leading/trailing -
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^\w\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+      .replace(/^-+|-+$/g, '');
     
-    // If slug is empty or starts with a number, prepend 'section'
     if (!slug || /^\d/.test(slug)) {
       slug = 'section-' + slug;
     }
     
-    // Ensure uniqueness
     let uniqueSlug = slug;
     let counter = 1;
     while (this.encounteredIds.has(uniqueSlug)) {
@@ -58,16 +61,12 @@ class TableOfContents {
     const maxIndex = this.validHeadings.indexOf(this.maxHeading);
     const validRange = this.validHeadings.slice(startIndex, maxIndex + 1);
     
-    // Get and process all valid headings
-    const headings = Array.from(contentArea.querySelectorAll(validRange.join(', ')))
+    const headings = Array.from(contentArea.querySelectorAll(validRange.join(',')))
       .map(heading => {
-        // Generate or validate existing ID
-        if (!heading.id || this.encounteredIds.has(heading.id)) {
-          heading.id = this._generateId(heading.textContent);
-        } else {
-          this.encounteredIds.add(heading.id);
+        const newId = this._generateId(heading.textContent, heading.id);
+        if (heading.id !== newId) {
+          heading.id = newId;
         }
-        
         return {
           element: heading,
           level: this.validHeadings.indexOf(heading.tagName)
@@ -79,42 +78,47 @@ class TableOfContents {
       return;
     }
 
-    // Create the TOC structure
     const tocList = document.createElement('ul');
     tocList.className = 'toc-list';
-    
+
     let currentList = tocList;
-    let previousLevel = startIndex;
+    let lastLevel = startIndex;
+    const lists = [tocList]; // Stack to keep track of lists
 
     headings.forEach(({ element, level }) => {
       const item = document.createElement('li');
       const link = document.createElement('a');
-      
       link.href = `#${element.id}`;
       link.textContent = element.textContent;
       item.appendChild(link);
 
-      if (level === previousLevel) {
+      if (level === lastLevel) {
+        // Same level, append to current list
         currentList.appendChild(item);
-      } else if (level > previousLevel) {
+      } else if (level > lastLevel) {
+        // Deeper level, create new nested list
         const newList = document.createElement('ul');
+        if (currentList.lastElementChild) {
+          currentList.lastElementChild.appendChild(newList);
+        } else {
+          currentList.appendChild(newList);
+        }
         newList.appendChild(item);
-        currentList.lastChild.appendChild(newList);
+        lists.push(newList);
         currentList = newList;
       } else {
-        // Go up the necessary number of levels
-        let levelsUp = previousLevel - level;
-        while (levelsUp > 0 && currentList.parentElement?.parentElement) {
-          currentList = currentList.parentElement.parentElement;
-          levelsUp--;
+        // Going back up, find the appropriate parent list
+        const levelsUp = lastLevel - level;
+        for (let i = 0; i < levelsUp && lists.length > 1; i++) {
+          lists.pop();
         }
+        currentList = lists[lists.length - 1];
         currentList.appendChild(item);
       }
-      
-      previousLevel = level;
+
+      lastLevel = level;
     });
 
-    // Clear and update the TOC container
     tocContainer.innerHTML = '';
     tocContainer.appendChild(tocList);
   }

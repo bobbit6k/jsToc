@@ -35,12 +35,14 @@
         <p>JavaScript can respond to user interactions...</p>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/gh/bobbit6k/jsToc/toc-min.js"></script>
+    <script src="
+    https://cdn.jsdelivr.net/gh/bobbit6k/jsToc/toc-min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const toc = new TableOfContents('#content', 'h2', 'h2');
+            const toc = new TableOfContents('#content', 'h1', 'h2', false);
             toc.generate();
         });
     </script>
 </body>
 </html>
+
